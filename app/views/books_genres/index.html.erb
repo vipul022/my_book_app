@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Books Genres</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Book</th>
+      <th>Genre</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books_genres.each do |books_genre| %>
+      <tr>
+        <td><%= books_genre.book_id %></td>
+        <td><%= books_genre.genre_id %></td>
+        <td><%= link_to 'Show', books_genre %></td>
+        <td><%= link_to 'Edit', edit_books_genre_path(books_genre) %></td>
+        <td><%= link_to 'Destroy', books_genre, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Books Genre', new_books_genre_path %>

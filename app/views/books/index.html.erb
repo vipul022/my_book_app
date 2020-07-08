@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Books</h1>
+<table>
+
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Published date</th>
+      <th>Author</th>
+      <th>Genre</th>
+      <th colspan="4"></th>
+    </tr>
+ 
+  </thead>
+
+  <tbody>
+    <% @books.each do |book| %>
+   
+      <tr>
+    
+        <td><%= book.title %></td>
+        <td><%= book.published_date %></td>
+        <td><%= link_to book.author.name,author_path(book.author.id) %></td>
+
+       <td>
+        <% book.genres.each do |g| %>
+        <%= g.name %>
+        <% end %>
+      </td>
+   
+   
+
+        <td><%= link_to 'Show', book %></td>
+        <td><%= link_to 'Edit', edit_book_path(book) %></td>
+        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+
+    
+  
+    <% end %>
+  
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Book', new_book_path %>
+
