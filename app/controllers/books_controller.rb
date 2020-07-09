@@ -26,8 +26,10 @@ class BooksController < ApplicationController
   # POST /books.json
   def create
    p "-------@genre_params"
+  
    #maped [:book][:genres] and converted into array of integers 
    p @genre_params = params[:book][:genres].map{ |g| g.to_i}
+   
    
   #extracted genres and saved into @genre variable
    @genre = Genre.find(@genre_params)
@@ -35,6 +37,9 @@ class BooksController < ApplicationController
    p @genre
      @book = Book.new(book_params)
      @book.genres << @genre
+    
+        
+    
 
     respond_to do |format|
       if @book.save
@@ -87,7 +92,7 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title, :published_date, :author_id)
+      params.require(:book).permit(:title, :published_date, :author_id, :picture)
     end
 end
 

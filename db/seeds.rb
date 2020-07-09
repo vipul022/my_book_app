@@ -19,11 +19,7 @@ Author.create(
 
 )
 
-Book.create(
-  title: "Harry Potter",
-  author_id: 1
 
-)
 
 genres = ["fantasy", "horror", "romance", "crime","sci-fi"]
 
