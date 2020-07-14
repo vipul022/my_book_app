@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users, path: "/"
  root to: "welcome#index"
   resources :books_genres
   resources :genres

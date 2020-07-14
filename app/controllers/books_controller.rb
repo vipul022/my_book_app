@@ -26,7 +26,13 @@ class BooksController < ApplicationController
   # POST /books.json
   def create
    p "-------@genre_params"
-  
+  if params[:book][:genres] == nil
+     p "@book.errors---------"
+    #  p @book.errors 
+     @book = Book.new(book_params)
+      return render "new"
+  end    
+
    #maped [:book][:genres] and converted into array of integers 
    p @genre_params = params[:book][:genres].map{ |g| g.to_i}
    
