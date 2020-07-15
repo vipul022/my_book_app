@@ -1,6 +1,8 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
-   before_action :set_authors_genres, only: [:new, :edit, :create]
+  before_action :authenticate_user!, except: [:index,:show]
+  before_action :set_book, only: [:show]
+  before_action :set_user_book, only: [:edit, :update, :destroy]
+  before_action :set_authors_genres, only: [:new, :edit, :create]
 
   # GET /books
   # GET /books.json
@@ -27,7 +29,7 @@ class BooksController < ApplicationController
   def create
    p "-------@genre_params"
   if params[:book][:genres] == nil
-     p "@book.errors---------"
+    #  p "@book.errors---------"
     #  p @book.errors 
      @book = Book.new(book_params)
       return render "new"
@@ -37,11 +39,12 @@ class BooksController < ApplicationController
    p @genre_params = params[:book][:genres].map{ |g| g.to_i}
    
    
-  #extracted genres and saved into @genre variable
+  #extracted genres from database and saved into @genre variable
    @genre = Genre.find(@genre_params)
    p "---------genre"
    p @genre
-     @book = Book.new(book_params)
+     #@book = Book.new(book_params)
+     @book = current_user.books.create(book_params)
      @book.genres << @genre
     
         
@@ -94,6 +97,17 @@ class BooksController < ApplicationController
 
     def set_book
       @book = Book.find(params[:id])
+    end
+
+    def set_user_book
+      id = params[:id]
+        #find_by_id give nil if there is no book of current user
+        @book = current_user.books.find_by_id(id)
+        
+        if @book == nil
+        #boot the user out
+          redirect_to books_path
+        end 
     end
 
     # Only allow a list of trusted parameters through.
